@@ -1,0 +1,16 @@
+[
+  {
+    "keyword": "utes",
+    "min_price": 500,
+    "max_price": 3000,
+    "location": "Maroochydore",
+    "radius_km": 35
+  },
+  {
+    "keyword": "xtrail",
+    "min_price": 500,
+    "max_price": 3000,
+    "location": "Maroochydore",
+    "radius_km": 35
+  }
+]
