@@ -1,42 +1,45 @@
 import requests
-from bs4 import BeautifulSoup
 import json
 import os
 
-# Variables Telegram
+# Lire les variables d'environnement
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+
+print(f"[DEBUG] TELEGRAM_TOKEN: {TELEGRAM_TOKEN}")
+print(f"[DEBUG] TELEGRAM_CHAT_ID: {TELEGRAM_CHAT_ID}")
 
 # Fichier des filtres
 FILTERS_FILE = "filters.json"
 SEEN_FILE = "seen.json"
 
-# Lire les filtres
 def load_filters():
     with open(FILTERS_FILE, "r") as f:
         return json.load(f)
 
-# Lire les annonces déjà vues
 def load_seen():
     if os.path.exists(SEEN_FILE):
         with open(SEEN_FILE, "r") as f:
             return set(json.load(f))
     return set()
 
-# Enregistrer les annonces vues
 def save_seen(seen_ids):
     with open(SEEN_FILE, "w") as f:
         json.dump(list(seen_ids), f)
 
-# Envoyer une alerte Telegram
 def send_telegram(message):
+    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
+        print("[ERROR] Missing TELEGRAM_TOKEN or CHAT_ID")
+        return
+
     url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
     data = {"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "HTML"}
-    requests.post(url, data=data)
 
-# Fonction de scraping simulée (Facebook bloque le scraping direct)
+    print("[DEBUG] Sending Telegram message...")
+    response = requests.post(url, data=data)
+    print(f"[DEBUG] Telegram response: {response.status_code} {response.text}")
+
 def fake_scrape(filter_data):
-    # Simule une nouvelle annonce
     return [{
         "id": f"{filter_data['keyword']}_test123",
         "title": f"Test - {filter_data['keyword']}",
