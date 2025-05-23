@@ -2,9 +2,9 @@ import requests
 import json
 import os
 
-# Lire les variables d'environnement
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+# Lire les variables d'environnement avec nettoyage
+TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "").strip()
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "").strip()
 
 print(f"[DEBUG] TELEGRAM_TOKEN: {TELEGRAM_TOKEN}")
 print(f"[DEBUG] TELEGRAM_CHAT_ID: {TELEGRAM_CHAT_ID}")
